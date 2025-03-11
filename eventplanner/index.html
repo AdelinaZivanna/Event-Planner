@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Planner App</title>
+    <script src="react.development.js"></script>
+    <script src="react-dom.development.js"></script>
+    <script src="babel.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+    <div id="app"></div>
+
+    <script src="bootstrap.bundle.min.js"></script>
+    
+    <script type="text/babel">
+        const app = document.getElementById('app');
+        const root = ReactDOM.createRoot(app);
+
+        function EventApp() {
+            const [events, setEvents] = React.useState([]);
+            const [eventName, setEventName] = React.useState('');
+            const [eventDate, setEventDate] = React.useState('');
+
+            const addEvent = () => {
+                if (eventName && eventDate) {
+                    setEvents([...events, { name: eventName, date: eventDate }]);
+                    setEventName('');
+                    setEventDate('');
+                }
+            };
+            return (
+                <div className="container">
+                    <div className="card">
+                        <div className="card-header">
+                            <h3>Event Planner</h3>
+                        </div>
+                        <div className="card-body">
+                            <input 
+                                type="text" 
+                                className="form-control mb-2" 
+                                placeholder="Event Name" 
+                                value={eventName} 
+                                onChange={(e) => setEventName(e.target.value)} 
+                            />
+                            <input 
+                                type="date" 
+                                className="form-control mb-2" 
+                                value={eventDate} 
+                                onChange={(e) => setEventDate(e.target.value)} 
+                            />
+                            <button className="btn btn-primary" onClick={addEvent}>Add Event</button>
+                            <h3 className="mt-3">Upcoming Events</h3>
+                            <ul className="list-group">
+                                {events.map((event, index) => (
+                                    <li className="list-group-item" key={index}>
+                                        {event.name} - {event.date}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        root.render(<EventApp />);
+    </script> 
+</body>
+</html>
